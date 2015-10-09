@@ -70,8 +70,10 @@ namespace JSONAPI.Http
             var includePaths = GetIncludePathsForQuery() ?? new Expression<Func<TDto, object>>[] { };
             var jsonApiPaths = includePaths.Select(ConvertToJsonKeyPath).ToArray();
             var mappedQuery = GetMappedQuery(entityQuery, includePaths);
-            var sortationPaths = _sortExpressionExtractor.ExtractSortExpressions(request);
-            return await _queryableResourceCollectionDocumentBuilder.BuildDocument(mappedQuery, request, sortationPaths, cancellationToken, jsonApiPaths);
+            var sortExpressions = _sortExpressionExtractor.ExtractSortExpressions(request);
+            if (sortExpressions == null || sortExpressions.Length < 1)
+                sortExpressions = GetDefaultSortExpressions();
+            return await _queryableResourceCollectionDocumentBuilder.BuildDocument(mappedQuery, request, sortExpressions, cancellationToken, jsonApiPaths);
         }
 
         public virtual async Task<ISingleResourceDocument> GetRecordById(string id, HttpRequestMessage request, CancellationToken cancellationToken)
@@ -114,7 +116,16 @@ namespace JSONAPI.Http
         {
             return null;
         }
-        
+
+        /// <summary>
+        /// If the client doesn't request any sort expressions, these expressions will be used for sorting instead.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string[] GetDefaultSortExpressions()
+        {
+            return null;
+        }
+
         private string ConvertToJsonKeyPath(Expression<Func<TDto, object>> expression)
         {
             var visitor = new PathVisitor(_resourceTypeRegistry);
