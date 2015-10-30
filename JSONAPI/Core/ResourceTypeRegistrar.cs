@@ -41,6 +41,9 @@ namespace JSONAPI.Core
                 throw new InvalidOperationException(String.Format(
                     "Unable to determine Id property for type `{0}`.", type.Name));
 
+            var converter = GetValueConverterForProperty(idProperty);
+            var idField = new ResourceTypeAttribute(converter, idProperty, "id");
+
             var props = type.GetProperties().OrderBy(p => p.Name);
             foreach (var prop in props)
             {
@@ -88,7 +91,7 @@ namespace JSONAPI.Core
                 sortByIdFactory = param => Expression.Property(param, idProperty);
             }
 
-            return new ResourceTypeRegistration(type, idProperty, resourceTypeName, fieldMap, filterByIdFactory,
+            return new ResourceTypeRegistration(type, idField, resourceTypeName, fieldMap, filterByIdFactory,
                 sortByIdFactory);
         }
 

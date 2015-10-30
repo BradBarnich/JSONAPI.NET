@@ -14,6 +14,6 @@
         /// If this collection is null or empty, no linkage will be included.</param>
         /// <param name="topLevelMetadata">Metadata to serialize at the top level of the document</param>
         /// <returns></returns>
-        ISingleResourceDocument BuildDocument(object primaryData, string linkBaseUrl, string[] includePathExpressions, IMetadata topLevelMetadata);
+        ISingleResourceDocument BuildDocument(object primaryData, string linkBaseUrl = null, string[] includePathExpressions = null, IMetadata topLevelMetadata = null);
     }
 }

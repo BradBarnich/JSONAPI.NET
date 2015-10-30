@@ -19,7 +19,7 @@ namespace JSONAPI.Documents.Builders
         {
         }
 
-        public ISingleResourceDocument BuildDocument(object primaryData, string linkBaseUrl, string[] includePathExpressions, IMetadata topLevelMetadata)
+        public ISingleResourceDocument BuildDocument(object primaryData, string linkBaseUrl = null, string[] includePathExpressions = null, IMetadata topLevelMetadata = null)
         {
             var idDictionariesByType = new Dictionary<string, IDictionary<string, ResourceObject>>();
             var primaryDataResource = CreateResourceObject(primaryData, idDictionariesByType, null, includePathExpressions, linkBaseUrl);

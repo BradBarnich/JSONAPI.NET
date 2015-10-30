@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JSONAPI.Http;
+using Newtonsoft.Json.Linq;
 
 namespace JSONAPI.Core
 {
@@ -16,13 +17,14 @@ namespace JSONAPI.Core
         private readonly IReadOnlyDictionary<string, ResourceTypeField> _fields;
         private readonly Func<ParameterExpression, string, BinaryExpression> _filterByIdExpressionFactory;
         private readonly Func<ParameterExpression, Expression> _sortByIdExpressionFactory;
+        private readonly ResourceTypeAttribute _idAttribute;
 
-        internal ResourceTypeRegistration(Type type, PropertyInfo idProperty, string resourceTypeName,
+        internal ResourceTypeRegistration(Type type, ResourceTypeAttribute idAttribute, string resourceTypeName,
             IDictionary<string, ResourceTypeField> fields,
             Func<ParameterExpression, string, BinaryExpression> filterByIdExpressionFactory,
             Func<ParameterExpression, Expression> sortByIdExpressionFactory)
         {
-            IdProperty = idProperty;
+            _idAttribute = idAttribute;
             Type = type;
             ResourceTypeName = resourceTypeName;
             _filterByIdExpressionFactory = filterByIdExpressionFactory;
@@ -34,7 +36,7 @@ namespace JSONAPI.Core
 
         public Type Type { get; private set; }
 
-        public PropertyInfo IdProperty { get; private set; }
+        public PropertyInfo IdProperty { get { return _idAttribute.Property; } }
 
         public string ResourceTypeName { get; private set; }
 
@@ -49,7 +51,7 @@ namespace JSONAPI.Core
 
         public void SetIdForResource(object resource, string id)
         {
-            IdProperty.SetValue(resource, id); // TODO: handle classes with non-string ID types
+            _idAttribute.SetValue(resource, new JValue(id));
         }
 
         public BinaryExpression GetFilterByIdExpression(ParameterExpression parameter, string id)

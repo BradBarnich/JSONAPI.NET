@@ -17,6 +17,6 @@ namespace JSONAPI.Documents.Builders
         /// <param name="metadata">Metadata for the top-level</param>
         /// <typeparam name="TModel"></typeparam>
         /// <returns></returns>
-        IResourceCollectionDocument BuildDocument<TModel>(IEnumerable<TModel> primaryData, string linkBaseUrl, string[] includePathExpressions, IMetadata metadata);
+        IResourceCollectionDocument BuildDocument<TModel>(IEnumerable<TModel> primaryData, string linkBaseUrl = null, string[] includePathExpressions = null, IMetadata metadata = null);
     }
 }

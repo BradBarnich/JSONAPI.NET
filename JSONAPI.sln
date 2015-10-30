@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONAPI", "JSONAPI\JSONAPI.csproj", "{52B19FD6-EFAA-45B5-9C3E-A652E27608D1}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONAPI.AcceptanceTests.EntityFrameworkTestWebApp.Tests", "JSONAPI.AcceptanceTests.EntityFrameworkTestWebApp.Tests\JSONAPI.AcceptanceTests.EntityFrameworkTestWebApp.Tests.csproj", "{58AEF8B8-8D51-4175-AC96-BC622703E8BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONAPI.Autofac.Tests", "JSONAPI.Autofac.Tests\JSONAPI.Autofac.Tests.csproj", "{AEA3C57B-8360-42FF-95E8-0F3A6BA5BCB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmberDataTesting", "src\EmberDataTesting\EmberDataTesting.csproj", "{387B6935-1FE8-4555-84D6-1591FE205F65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{AEA3C57B-8360-42FF-95E8-0F3A6BA5BCB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEA3C57B-8360-42FF-95E8-0F3A6BA5BCB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEA3C57B-8360-42FF-95E8-0F3A6BA5BCB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387B6935-1FE8-4555-84D6-1591FE205F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387B6935-1FE8-4555-84D6-1591FE205F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387B6935-1FE8-4555-84D6-1591FE205F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387B6935-1FE8-4555-84D6-1591FE205F65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,15 +9,17 @@ namespace JSONAPI.Core
     public class ResourceTypeRegistry : IResourceTypeRegistry
     {
         private readonly IDictionary<string, IResourceTypeRegistration> _registrationsByName;
-        private readonly IDictionary<Type, IResourceTypeRegistration> _registrationsByType; 
+        private readonly IDictionary<Type, IResourceTypeRegistration> _registrationsByType;
+        private readonly IResourceTypeRegistrar _defaultRegistrar;
 
         /// <summary>
         /// Creates a new ResourceTypeRegistry
         /// </summary>
-        public ResourceTypeRegistry()
+        public ResourceTypeRegistry(IResourceTypeRegistrar defaultRegistrar = null)
         {
             _registrationsByName = new Dictionary<string, IResourceTypeRegistration>();
             _registrationsByType = new Dictionary<Type, IResourceTypeRegistration>();
+            _defaultRegistrar = defaultRegistrar;
         }
 
         public bool TypeIsRegistered(Type type)
@@ -73,21 +75,25 @@ namespace JSONAPI.Core
 
         private IResourceTypeRegistration FindRegistrationForType(Type type)
         {
+            IResourceTypeRegistration registration;
             lock (_registrationsByType)
             {
                 var currentType = type;
                 while (currentType != null && currentType != typeof(Object))
                 {
-                    IResourceTypeRegistration registration;
                     if (_registrationsByType.TryGetValue(currentType, out registration))
                         return registration;
 
                     // This particular type wasn't registered, but maybe the base type was.
                     currentType = currentType.BaseType;
                 }
-            }
 
-            return null;
+                if (_defaultRegistrar == null) return null;
+
+                registration = _defaultRegistrar.BuildRegistration(type);
+                AddRegistration(registration);
+                return registration;
+            }
         }
     }
 }

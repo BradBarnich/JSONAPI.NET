@@ -90,6 +90,8 @@
     <Compile Include="Http\MappedDocumentMaterializer.cs" />
     <Compile Include="Http\QueryableToManyRelatedResourceDocumentMaterializer.cs" />
     <Compile Include="Http\QueryableToOneRelatedResourceDocumentMaterializer.cs" />
+    <Compile Include="Http\RegistryDrivenDocumentMaterializer.cs" />
+    <Compile Include="Json\RegistryDrivenJsonApiFormatter.cs" />
     <Compile Include="QueryableTransformers\DefaultFilteringTransformer.cs" />
     <Compile Include="QueryableTransformers\DefaultPaginationTransformer.cs" />
     <Compile Include="QueryableTransformers\DefaultPaginationTransformResult.cs" />

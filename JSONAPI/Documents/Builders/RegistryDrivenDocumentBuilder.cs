@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JSONAPI.Core;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace JSONAPI.Documents.Builders
 {
@@ -27,6 +28,7 @@ namespace JSONAPI.Documents.Builders
         internal static bool PathExpressionMatchesCurrentPath(string currentPath, string pathToInclude)
         {
             if (string.IsNullOrEmpty(pathToInclude)) return false;
+            if (pathToInclude.Equals("*")) return true;
             if (currentPath == pathToInclude) return true;
 
             var currentPathSegments = currentPath.Split('.');
@@ -137,8 +139,12 @@ namespace JSONAPI.Documents.Builders
 
                 var selfLink = _linkConventions.GetRelationshipLink(modelObject, _resourceTypeRegistry, modelRelationship, linkBaseUrl);
                 var relatedResourceLink = _linkConventions.GetRelatedResourceLink(modelObject, _resourceTypeRegistry, modelRelationship, linkBaseUrl);
-
-                relationships[modelRelationship.JsonKey] = new RelationshipObject(linkage, selfLink, relatedResourceLink);
+                RelationshipObject relationshipObject = null;
+                if (linkage != null || selfLink != null || relatedResourceLink != null )
+                {
+                    relationshipObject = new RelationshipObject(linkage, selfLink, relatedResourceLink);
+                }
+                relationships[modelRelationship.JsonKey] = relationshipObject;
             }
 
             var resourceId = resourceTypeRegistration.GetIdForResource(modelObject);

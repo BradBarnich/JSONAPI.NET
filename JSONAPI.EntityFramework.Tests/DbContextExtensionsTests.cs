@@ -55,7 +55,7 @@ namespace JSONAPI.EntityFramework.Tests
         }
 
         [TestCleanup]
-        private void CleanupTest()
+        public void CleanupTest()
         {
             _context.Dispose();
         }
